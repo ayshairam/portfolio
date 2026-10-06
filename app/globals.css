@@ -1,0 +1,324 @@
+@import "tailwindcss";
+
+/* ───────────── Design tokens ───────────── */
+:root {
+  --black: #000000;
+  --red: #e00000;
+  --red-deep: #7a090c;
+  --red-dark: #4a080a;
+  --white: #ffffff;
+  --grey: #b8b8b8;
+  --surface: #161616;
+
+  --font-display: "Oswald Variable", "Oswald", "Arial Narrow", sans-serif;
+  --font-bebas: "Bebas Neue", "Oswald Variable", "Arial Narrow", sans-serif;
+  --font-title: "Tenor Sans", "Poppins", "Helvetica Neue", sans-serif;
+  --font-body: "Poppins", "Helvetica Neue", Arial, sans-serif;
+
+  --pad-x: clamp(1.25rem, 4vw, 4.5rem);
+  --section-y: clamp(5rem, 12vw, 11rem);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@theme inline {
+  --color-ink: var(--black);
+  --color-red: var(--red);
+  --color-red-deep: var(--red-deep);
+  --color-red-dark: var(--red-dark);
+  --color-paper: var(--white);
+  --color-grey: var(--grey);
+  --color-surface: var(--surface);
+  --font-display: var(--font-display);
+  --font-bebas: var(--font-bebas);
+  --font-title: var(--font-title);
+  --font-body: var(--font-body);
+}
+
+/* ───────────── Base ───────────── */
+html {
+  background: var(--black);
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-weight: 300;
+  line-height: 1.65;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+::selection {
+  background: var(--red);
+  color: var(--white);
+}
+body.is-locked {
+  overflow: hidden;
+}
+img,
+video {
+  max-width: 100%;
+}
+
+:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+.on-red :focus-visible,
+.on-red:focus-visible {
+  outline-color: var(--white);
+}
+
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: -4rem;
+  z-index: 200;
+  background: var(--red);
+  color: var(--white);
+  padding: 0.75rem 1.25rem;
+  font-weight: 500;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+@layer components {
+/* ───────────── Layout helpers ───────────── */
+.wrap {
+  width: 100%;
+  max-width: 1600px;
+  margin-inline: auto;
+  padding-inline: var(--pad-x);
+}
+.section {
+  position: relative;
+  padding-block: var(--section-y);
+}
+
+/* ───────────── Typography ───────────── */
+.t-portfolio {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(3.6rem, 16.5vw, 17rem);
+  line-height: 0.82;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+.t-mega {
+  font-family: var(--font-bebas);
+  font-size: clamp(3.5rem, 13vw, 13.5rem);
+  line-height: 0.86;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+.t-huge {
+  font-family: var(--font-bebas);
+  font-size: clamp(3rem, 9vw, 9.5rem);
+  line-height: 0.88;
+  text-transform: uppercase;
+}
+.t-section {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: clamp(2rem, 8vw, 8.5rem);
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+.t-script {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-weight: 600;
+  color: var(--red);
+  font-size: clamp(1.1rem, 2.2vw, 2rem);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+.t-label {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.t-body {
+  font-size: clamp(0.95rem, 1.05vw, 1.08rem);
+  color: var(--grey);
+  max-width: 62ch;
+}
+.t-caps {
+  font-size: clamp(0.78rem, 0.85vw, 0.9rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1.75;
+  text-transform: uppercase;
+  color: var(--white);
+  max-width: 58ch;
+}
+.text-red {
+  color: var(--red);
+}
+
+/* ───────────── Red system ───────────── */
+.red-band {
+  position: relative;
+  background:
+    radial-gradient(120% 140% at 30% 50%, rgba(224, 0, 0, 0.95) 0%, rgba(224, 0, 0, 0) 55%),
+    linear-gradient(90deg, var(--red-dark) 0%, var(--red) 28%, var(--red-deep) 70%, var(--red-dark) 100%);
+}
+.red-band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, transparent 18%, transparent 80%, rgba(0, 0, 0, 0.45) 100%);
+}
+.red-rule {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, var(--red-deep) 15%, var(--red) 50%, var(--red-deep) 85%, transparent);
+  box-shadow: 0 0 18px rgba(224, 0, 0, 0.55);
+}
+.brush {
+  filter: url(#brush-edge);
+}
+
+/* L-shaped frame lines from the reference's experience section */
+.l-frame {
+  position: relative;
+}
+.l-frame::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: -14px;
+  width: 42%;
+  height: 70%;
+  border-left: 1.5px solid var(--white);
+  border-top: 1.5px solid var(--white);
+  pointer-events: none;
+}
+
+/* Masked edges so a rectangular JPG reads like a cutout */
+.feather {
+  -webkit-mask-image: linear-gradient(to top, transparent 0%, #000 22%), linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to top, transparent 0%, #000 22%), linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  mask-composite: intersect;
+}
+
+/* ───────────── Interactive bits ───────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1rem 1.6rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1.5px solid currentColor;
+  transition: background-color 0.35s var(--ease-out), color 0.35s var(--ease-out), border-color 0.35s var(--ease-out);
+}
+.btn-solid {
+  background: var(--black);
+  border-color: var(--black);
+  color: var(--white);
+}
+.btn-solid:hover {
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--black);
+}
+.btn-ghost:hover {
+  background: var(--white);
+  color: var(--black);
+}
+.btn-red {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--white);
+}
+.btn-red:hover {
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--black);
+}
+.btn[aria-disabled="true"] {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.link-line {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.45s var(--ease-out), color 0.3s;
+}
+.link-line:hover,
+.link-line:focus-visible {
+  background-size: 100% 1px;
+}
+
+/* split text */
+.split-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.04em;
+  margin-bottom: -0.04em;
+}
+.split-unit {
+  display: inline-block;
+  will-change: transform;
+}
+
+}
+
+/* custom cursor */
+html.has-cursor,
+html.has-cursor a,
+html.has-cursor button,
+html.has-cursor [role="button"] {
+  cursor: none;
+}
+
+/* scroll indicator */
+@keyframes drip {
+  0% { transform: scaleY(0); transform-origin: top; }
+  45% { transform: scaleY(1); transform-origin: top; }
+  55% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+.scroll-line {
+  animation: drip 2.4s var(--ease-out) infinite;
+}
+
+/* no scrollbar for horizontal rails */
+.rail {
+  scrollbar-width: none;
+}
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
